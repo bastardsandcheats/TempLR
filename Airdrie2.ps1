@@ -26,9 +26,12 @@ if (Test-Path $GlobalLabInfoPath) {
 $labInfoPath = "C:\labinfo.ini"
 $iniContent = @"
 [PATH]
-ROOTPATH=z:\Lab Reports\System\Installation\
+ROOTPATH=z:\Lab\Lab Report\Installation\
 "@
-$iniContent | Out-File -FilePath $labInfoPath -Encoding Utf8NoBOM
+
+# Ensure UTF-8 encoding without BOM
+[System.IO.File]::WriteAllText($labInfoPath, $iniContent, [System.Text.Encoding]::UTF8)
+
 
 # Step 3: Create a shortcut to Excel with arguments
 $shortcutPath = [System.Environment]::GetFolderPath('CommonDesktopDirectory') + "\Lab Reports on prem.lnk"
