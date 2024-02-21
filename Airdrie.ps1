@@ -28,7 +28,7 @@ $iniContent = @"
 [PATH]
 ROOTPATH=z:\Lab Reports\System\Installation\
 "@
-$iniContent | Out-File -FilePath $labInfoPath -Encoding UTF8
+$iniContent | Out-File -FilePath $labInfoPath -Encoding utf8
 
 # Step 3: Create a shortcut to Excel with arguments
 $shortcutPath = [System.Environment]::GetFolderPath('CommonDesktopDirectory') + "\Lab Reports on prem.lnk"
