@@ -26,7 +26,7 @@ if (Test-Path $GlobalLabInfoPath) {
 $labInfoPath = "C:\labinfo.ini"
 $iniContent = @"
 [PATH]
-ROOTPATH=z:\Lab\Lab Report\Installation\
+ROOTPATH=z:\Lab Reports\System\Installation\
 "@
 $iniContent | Out-File -FilePath $labInfoPath -Encoding ASCII
 
