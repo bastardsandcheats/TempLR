@@ -1,18 +1,18 @@
 # PowerShell script to create labinfo.ini, create a shortcut, and delete specific files
 
-# Step 1: Delete labInfo.ini from each user's OneDrive directory and from C:\
-$RelativeFilePath = "OneDrive - IGNE\Documents\LabReports\labInfo.ini"
+# Step 1: Delete the LabReports folder from each user's OneDrive directory
+$RelativeFolderPath = "OneDrive - IGNE\Documents\LabReports"
 
 # Get all user directories in C:\Users
 $UserDirectories = Get-ChildItem -Path "C:\Users" -Directory
 
 foreach ($UserDir in $UserDirectories) {
-    $FullFilePath = Join-Path -Path $UserDir.FullName -ChildPath $RelativeFilePath
-    if (Test-Path $FullFilePath) {
-        Write-Host "Deleting: $FullFilePath"
-        Remove-Item $FullFilePath -Force
+    $FullFolderPath = Join-Path -Path $UserDir.FullName -ChildPath $RelativeFolderPath
+    if (Test-Path $FullFolderPath) {
+        Write-Host "Deleting: $FullFolderPath"
+        Remove-Item $FullFolderPath -Recurse -Force
     } else {
-        Write-Host "File not found: $FullFilePath"
+        Write-Host "Folder not found: $FullFolderPath"
     }
 }
 
