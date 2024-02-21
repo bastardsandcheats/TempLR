@@ -23,14 +23,13 @@ if (Test-Path $GlobalLabInfoPath) {
 }
 
 # Step 2: Create labinfo.ini with specified content
-$labInfoPath = "C:\labinfo.ini"
-$iniContent = @"
-[PATH]
-ROOTPATH=z:\Lab\Lab Report\Installation\
-"@ -replace "`n", "`r`n"
-
-# Ensure UTF-8 encoding without BOM and Windows-style line endings (CRLF)
-[System.IO.File]::WriteAllText($labInfoPath, $iniContent, [System.Text.Encoding]::UTF8)
+# Define the URL of the LabinfoAirdrie.ini file
+$url = "https://raw.githubusercontent.com/bastardsandcheats/TempLR/main/LabinfoAirdrie.ini"
+# Define the destination path where the file should be saved
+$destinationPath = "C:\labinfo.ini"
+# Use Invoke-WebRequest to download the file
+Invoke-WebRequest -Uri $url -OutFile $destinationPath
+Write-Host "The file has been downloaded and saved to $destinationPath"
 
 # Step 3: Create a shortcut to Excel with arguments
 $shortcutPath = [System.Environment]::GetFolderPath('CommonDesktopDirectory') + "\Lab Reports on prem.lnk"
