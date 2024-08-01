@@ -1,0 +1,25 @@
+# Define the name of the scheduled task
+$taskName = "MapNetworkDrive"
+
+# Define the commands to be run at logon
+$actionCommand = 'powershell.exe -Command "net use z: /delete; net use z: \\airdrie-dc\company\labreports /user:dtsttk\laba labairdrie /persist:yes"'
+
+# Create a new action for the scheduled task
+$action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-Command `"$actionCommand`""
+
+# Define the trigger to run the task at logon of any user
+$trigger = New-ScheduledTaskTrigger -AtLogOn
+
+# Define the principal for the task to run for all users
+$principal = New-ScheduledTaskPrincipal -UserId "S-1-5-32-545" -LogonType Interactive -RunLevel Highest
+
+# Define the settings for the scheduled task
+$settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
+
+# Check if the scheduled task already exists and delete it if it does
+if (Get-ScheduledTask -TaskName $taskName -ErrorAction SilentlyContinue) {
+    Unregister-ScheduledTask -TaskName $taskName -Confirm:$false
+}
+
+# Register the scheduled task
+Register-ScheduledTask -Action $action -Trigger $trigger -Principal $principal -Settings $settings -TaskName $taskName -Description "Maps the Z: drive to the specified network share at user logon"
