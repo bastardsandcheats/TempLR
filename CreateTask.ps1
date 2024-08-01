@@ -1,5 +1,5 @@
 # Define the commands to be run at logon
-$actionCommand = 'powershell.exe -Command "net use z: /delete; net use z: \\airdrie-dc\company\labreports /user:dtsttk\laba labairdrie /persist:yes"'
+$actionCommand = 'powershell.exe -Command "net use z: /delete; net use z: \\10.0.0.1\company\labreports /user:dtsttk\laba labairdrie /persist:yes"'
 
 # Create a new action for the scheduled task
 $action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument "-Command `"$actionCommand`""
